@@ -20,6 +20,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM gui_j_ctl_k_combo[] = {RGUI_T(KC_J), RCTL_T(KC_K), COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(jk_combo, KC_ESC),
+    COMBO(gui_j_ctl_k_combo, KC_ESC),
+};
+
+#ifdef COMBO_MUST_TAP_PER_COMBO
+bool get_combo_must_tap(uint16_t combo_index, combo_t *combo) {
+    // If you want all combos to be tap-only, just uncomment the next line
+    // return true
+
+    // If you want *all* combos, that have Mod-Tap/Layer-Tap/Momentary keys in its chord, to be tap-only, this is for you:
+    uint16_t key;
+    uint8_t idx = 0;
+    while ((key = pgm_read_word(&combo->keys[idx])) != COMBO_END) {
+        switch (key) {
+            case QK_MOD_TAP...QK_MOD_TAP_MAX:
+            case QK_LAYER_TAP...QK_LAYER_TAP_MAX:
+            case QK_MOMENTARY...QK_MOMENTARY_MAX:
+                return true;
+        }
+        idx += 1;
+    }
+    return false;
+
+}
+#endif
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
