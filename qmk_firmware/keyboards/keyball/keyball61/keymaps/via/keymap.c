@@ -20,6 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM gui_j_ctl_k_combo[] = {LGUI_T(KC_J), LCTL_T(KC_K), COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(jk_combo, KC_ESC),
+    COMBO(gui_j_ctl_k_combo, KC_ESC),
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
